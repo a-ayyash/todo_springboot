@@ -1,23 +1,40 @@
 package com.hmd.tutorials.todos;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+@Document
 public class Todo {
-  private int id;
+  @Id
+  private String id;
+
+  @NotNull(message = "7o6 title")
+  @Size(min = 5, message = "Title must be at least 5 characters")
   private String title;
+
+  @NotNull(message = "Description iz required")
   private String description;
+  private long timestamp;
 
-  public Todo() {}
+  public Todo() {
+    this.timestamp = System.currentTimeMillis();
+  }
 
-  public Todo(int id, String title, String description) {
+  public Todo(String id, String title, String description) {
     this.id = id;
     this.title = title;
     this.description = description;
+    this.timestamp = System.currentTimeMillis();
   }
 
-  public int getId() {
+  public String getId() {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(String id) {
     this.id = id;
   }
 

@@ -1,55 +1,29 @@
 package com.hmd.tutorials.todos;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
 public class TodoService {
 
-  private List<Todo> data = new ArrayList<>(
-          Arrays.asList(
-                  new Todo(1, "first todo", "my first todo description"),
-                  new Todo(2, "second todo", "my second todo description"),
-                  new Todo(3, "third todo", "my third todo description"),
-                  new Todo(4, "fourth todo", "my fourth todo description")
-          )
-  );
+  @Autowired
+  private TodoRepository todoRepository;
 
   public List<Todo> getAllTodos() {
-    return data;
+    return todoRepository.findAll();
   }
 
-  Todo getTodo(int id) {
-    for (Todo todo : data) {
-      if (todo.getId() == id)
-        return todo;
-    }
-
-    return null;
+  Todo getTodo(String id) {
+    return todoRepository.findById(id).get();
   }
 
-  boolean save(Todo newTodo) {
-    for (Todo todo : data) {
-      if (todo.getId() == newTodo.getId()) {
-        data.remove(todo);
-        return data.add(newTodo);
-      }
-    }
-
-    return data.add(newTodo);
+  Todo save(Todo newTodo) {
+    return todoRepository.save(newTodo);
   }
 
-  void delete(int id) {
-    for (Todo todo : data) {
-      if (todo.getId() == id) {
-        data.remove(todo);
-        break;
-      }
-
-    }
-
+  void delete(String id) {
+    todoRepository.deleteById(id);
   }
 }
