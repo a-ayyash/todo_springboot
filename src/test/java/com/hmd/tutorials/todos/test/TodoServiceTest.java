@@ -1,5 +1,6 @@
-package test.hmd.tutorials.todos;
+package com.hmd.tutorials.todos.test;
 
+import com.hmd.tutorials.error.TodoNotFoundException;
 import com.hmd.tutorials.todos.Todo;
 import com.hmd.tutorials.todos.TodoRepository;
 import com.hmd.tutorials.todos.TodoService;
@@ -62,6 +63,13 @@ public class TodoServiceTest {
     Todo t = todoService.getTodo(Integer.toString(ID));
 
     assertThat(t.getTitle()).isEqualTo(todos.get(ID).getTitle());
+  }
+
+
+  @Test(expected = TodoNotFoundException.class)
+  public void whenIDIsInvalid_ExceptionShouldBeThrown() {
+    given(todoRepository.findById(anyString())).willReturn(Optional.empty());
+    todoService.getTodo("1");
   }
 
 
