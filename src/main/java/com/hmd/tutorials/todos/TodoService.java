@@ -18,7 +18,7 @@ public class TodoService {
     return todoRepository.findAll();
   }
 
-  Todo getTodo(String id) {
+  public Todo getTodo(String id) {
     try {
       return todoRepository.findById(id).get();
     } catch (NoSuchElementException ex) {
@@ -26,7 +26,7 @@ public class TodoService {
     }
   }
 
-  Todo save(Todo newTodo) {
+  public Todo save(Todo newTodo) {
     if (todoRepository.findByTitle(newTodo.getTitle()) != null) {
       throw new TodoConflictException("Todo is already there!!!");
     }
